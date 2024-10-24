@@ -15,7 +15,9 @@ class AIAgent:
         with open('messages_log.json', 'w') as f:
             json.dump(self.messages, f, indent=4)
 
-        system_prompt = "You are a helpful assistant, and can use tools to perform actions on my computer."
+        system_prompt = """You are a helpful assistant, and can use tools to perform actions on my computer. 
+        My computer is a MacOS machine and to open up apps you need right click on the app and then click 'open'. 
+        You must click on the icon itself and not the name below the icon. As """
 
         # define the tools that the agent can use.  
         tools = [
@@ -91,31 +93,53 @@ class AIAgent:
                                 "data": result
                             }
                         }
+
                     elif action == 'key':
                         key = tool_input.get('key')
                         self.computer.key(key)
-                        feedback = "Key press successful"
+                        feedback = {
+                            "type": "text",
+                            "text": f"Key press '{key}' successful"
+                        }
                     elif action == 'type':
                         text = tool_input.get('text')
                         self.computer.type(text)
-                        feedback = "Text input successful"
+                        feedback = {
+                            "type": "text",
+                            "text": f"Text input '{text}' successful"
+                        }
                     elif action == 'mouse_move':
-                        x = tool_input.get('x')
-                        y = tool_input.get('y')
+                        x = tool_input.get('coordinate')[0]
+                        y = tool_input.get('coordinate')[1]
                         self.computer.mouse_move(x, y)
-                        feedback = "Mouse moved successfully"
+                        feedback = {
+                            "type": "text",
+                            "text": f"Mouse moved to coordinates ({x}, {y})"
+                        }
                     elif action == 'left_click':
                         self.computer.left_click()
-                        feedback = "Left click successful"
+                        feedback = {
+                            "type": "text",
+                            "text": "Left click successful"
+                        }
                     elif action == 'right_click':
                         self.computer.right_click()
-                        feedback = "Right click successful"
+                        feedback = {
+                            "type": "text",
+                            "text": "Right click successful"
+                        }
                     elif action == 'middle_click':
                         self.computer.middle_click()
-                        feedback = "Middle click successful"
+                        feedback = {
+                            "type": "text",
+                            "text": "Middle click successful"
+                        }
                     elif action == 'double_click':
                         self.computer.double_click()
-                        feedback = "Double click successful"
+                        feedback = {
+                            "type": "text",
+                            "text": "Double click successful"
+                        }
                     elif action == 'left_click_drag':
                         start_x = tool_input.get('start_x')
                         start_y = tool_input.get('start_y')
@@ -123,7 +147,10 @@ class AIAgent:
                         end_y = tool_input.get('end_y')
                         duration = tool_input.get('duration', 0.5)
                         self.computer.left_click_drag(start_x, start_y, end_x, end_y, duration)
-                        feedback = "Left click drag successful"
+                        feedback = {
+                            "type": "text",
+                            "text": f"Left click drag from ({start_x}, {start_y}) to ({end_x}, {end_y}) successful"
+                        }
                     elif action == 'cursor_position':
                         result = self.computer.cursor_position()
                         feedback = {"x": result[0], "y": result[1]}
