@@ -10,14 +10,17 @@ class AIAgent:
         self.computer = Computer()
 
     def invoke_agent(self, content_payload):
+
+        print(f"Invoking agent with content payload: {json.dumps(content_payload, indent=4)}")
+
         self.messages.append({"role": "user", "content": content_payload})  
 
         with open('messages_log.json', 'w') as f:
             json.dump(self.messages, f, indent=4)
 
         system_prompt = """You are a helpful assistant, and can use tools to perform actions on my computer. 
-        My computer is a MacOS machine and to open up apps you need right click on the app and then click 'open'. 
-        You must click on the icon itself and not the name below the icon. As """
+My computer is a MacOS machine.
+To open apps from the icon, move the mouse over the center of the icon and double click."""
 
         # define the tools that the agent can use.  
         tools = [
@@ -95,12 +98,14 @@ class AIAgent:
                         }
 
                     elif action == 'key':
-                        key = tool_input.get('key')
+                        print(f"Key press: {tool_input}")
+                        key = tool_input.get('text')
                         self.computer.key(key)
                         feedback = {
                             "type": "text",
-                            "text": f"Key press '{key}' successful"
+                            "text": f"Key press {key} successful"
                         }
+                        
                     elif action == 'type':
                         text = tool_input.get('text')
                         self.computer.type(text)
@@ -164,6 +169,8 @@ class AIAgent:
                         "tool_use_id": tool_use['id'],
                         "is_error": False
                     })
+
+                    self.invoke_agent([tool_results])
                 
                 elif tool_name == 'bash':
                     # TODO: Implement bash tool
@@ -175,7 +182,6 @@ class AIAgent:
                     print(f"Unknown tool: {tool_name}")
                 
                 # Invoke the agent with the combined content
-                self.invoke_agent([tool_results])
 
         # Send text response to the user.
         # print("Assistant:", response)
@@ -190,6 +196,6 @@ if __name__ == "__main__":
     agent = AIAgent()
     initial_payload = [{
         "type": 'text',
-        "text": 'Open up the browser and go to https://www.google.com'
+        "text": 'Load the Twitch stream from AWS called Build On Generative AI.'
     }]
     agent.invoke_agent(initial_payload)

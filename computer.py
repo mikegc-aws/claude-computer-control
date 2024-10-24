@@ -3,14 +3,26 @@ from PIL import Image
 import io
 import base64
 import time
+import pynput
+from pynput.mouse import Button, Controller as MouseController
+from pynput.keyboard import Key, Controller as KeyboardController
 
 class Computer:
     def __init__(self):
         self.display_width_px, self.display_height_px = pyautogui.size()
         pyautogui.FAILSAFE = False
+        self.mouse = MouseController()
+        self.keyboard = KeyboardController()
 
     def key(self, key):
-        pyautogui.press(key)
+        if key == 'Return':
+            self.keyboard.press(Key.enter)
+            time.sleep(0.1)
+            self.keyboard.release(Key.enter)
+        else:
+            self.keyboard.press(key)
+            time.sleep(0.1)
+            self.keyboard.release(key)
         time.sleep(0.1)
 
     def type(self, text):
@@ -40,11 +52,7 @@ class Computer:
         time.sleep(0.1)
 
     def double_click(self):
-        pyautogui.click()
-        time.sleep(1)
-        pyautogui.doubleClick()
-        time.sleep(1)
-        pyautogui.doubleClick()
+        self.mouse.click(Button.left, 2)
         time.sleep(0.1)
 
     def screenshot(self):
@@ -56,7 +64,6 @@ class Computer:
     def cursor_position(self):
         x, y = pyautogui.position()
         return {"x": x, "y": y}
-
 
 if __name__ == "__main__":
     computer = Computer()
