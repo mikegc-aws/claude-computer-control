@@ -11,8 +11,6 @@ class AIAgent:
 
     def invoke_agent(self, content_payload):
 
-        print(f"Invoking agent with content payload: {json.dumps(content_payload, indent=4)}")
-
         self.messages.append({"role": "user", "content": content_payload})  
 
         with open('messages_log.json', 'w') as f:
@@ -20,7 +18,8 @@ class AIAgent:
 
         system_prompt = """You are a helpful assistant, and can use tools to perform actions on my computer. 
 My computer is a MacOS machine.
-To open apps from the icon, move the mouse over the center of the icon and double click."""
+To open apps from the icon, move the mouse over the center of the icon and double click.
+I like to see videos playing. If you load a video, play it."""
 
         # define the tools that the agent can use.  
         tools = [
@@ -196,6 +195,6 @@ if __name__ == "__main__":
     agent = AIAgent()
     initial_payload = [{
         "type": 'text',
-        "text": 'Load the Twitch stream from AWS called Build On Generative AI.'
+        "text": 'Rickroll me! :)'
     }]
     agent.invoke_agent(initial_payload)
