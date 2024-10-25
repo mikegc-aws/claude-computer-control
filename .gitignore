@@ -1,5 +1,7 @@
 # Python project-related files and directories
+.env
 messages_log.json
+11labs.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

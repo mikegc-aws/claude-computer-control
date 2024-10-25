@@ -127,7 +127,7 @@ class Computer:
 
     def cursor_position(self):
         x, y = pyautogui.position()
-        return {"x": x, "y": y}
+        return x, y
 
 
 if __name__ == "__main__":

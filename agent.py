@@ -1,6 +1,7 @@
 import boto3
 import json
 from computer import Computer
+from myelevenlabs import ElevenLabsSpeech
 
 class AIAgent:
     def __init__(self, region_name='us-west-2'):
@@ -8,6 +9,7 @@ class AIAgent:
         self.model_id = "anthropic.claude-3-5-sonnet-20241022-v2:0"
         self.messages = []
         self.computer = Computer()
+        self.speech = ElevenLabsSpeech()
 
     def invoke_agent(self, content_payload):
 
@@ -27,14 +29,14 @@ class AIAgent:
                 "display_height_px": self.computer.display_height_px, # min=1, no max
                 "display_width_px": self.computer.display_width_px, # min=1, no max
             },
-            { # new
-                "type": "bash_20241022", # literal / constant
-                "name": "bash", # literal / constant
-            },
-            { # new
-                "type": "text_editor_20241022", # literal / constant
-                "name": "str_replace_editor", # literal / constant
-            }
+            # { # new
+            #     "type": "bash_20241022", # literal / constant
+            #     "name": "bash", # literal / constant
+            # },
+            # { # new
+            #     "type": "text_editor_20241022", # literal / constant
+            #     "name": "str_replace_editor", # literal / constant
+            # }
         ]
 
         # format the payload for the anthropic request.
@@ -65,6 +67,11 @@ class AIAgent:
 
     def process_response(self, response):
         print(f"Response body from model: {json.dumps(response, indent=4)}")
+
+        # Check if the response contains text content
+        # text_content = next((item['text'] for item in response['content'] if item['type'] == 'text'), None)
+        # if text_content:
+        #     self.speech.say(text_content)
 
         # Add the response to messages.
         role = response['role']
@@ -152,10 +159,16 @@ class AIAgent:
                         }
                     elif action == 'cursor_position':
                         result = self.computer.cursor_position()
-                        feedback = {"x": result[0], "y": result[1]}
+                        feedback = {
+                            "type": "text",
+                            "text": f"Cursor position: ({result[0]}, {result[1]})"
+                        }
                     else:
                         print(f"Unknown computer action: {action}")
-                        feedback = f"Unknown action: {action}"
+                        feedback = {
+                            "type": "text",
+                            "text": f"Unknown computer action: {action}"
+                        }
                     
                     tool_results = ({
                         "type": "tool_result",
