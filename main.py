@@ -9,14 +9,9 @@ def main():
     load_dotenv()
     agent = AIAgent()
 
-    # initial_payload = [{
-    #     "type": 'text',
-    #     "text": """Use Ubereats, select 2 pepperoni pizzas.  Put them in the cart.  Then checkout. Use the user that is currently logged in."""
-    # }]
-
     initial_payload = [{
         "type": 'text',
-        "text": """Find an image of a cat, then use matplotlib to plot the image."""
+        "text": """Use Ubereats, select 2 pepperoni pizzas.  Put them in the cart.  Then checkout. Use the user that is currently logged in."""
     }]
 
     try:
