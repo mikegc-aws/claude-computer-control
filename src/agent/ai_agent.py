@@ -42,6 +42,23 @@ class AIAgent:
         except Exception as e:
             logger.error(f"Error invoking Bedrock model: {str(e)}")
 
+
+    def save_messages_to_file(self) -> None:
+        """
+        Save the messages to a file with the current date and time as the filename.
+        """
+        from datetime import datetime
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"messages_{timestamp}.json"
+
+        try:
+            with open(filename, 'w') as file:
+                json.dump(self.messages, file, indent=4)
+            logger.info(f"Messages saved to file: {filename}")
+        except Exception as e:
+            logger.error(f"Error saving messages to file: {str(e)}")
+
     def _get_available_tools(self) -> List[Dict[str, Any]]:
         """
         Get the list of available tools for the AI agent.

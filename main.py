@@ -11,13 +11,22 @@ def main():
 
     initial_payload = [{
         "type": 'text',
-        "text": """Use Ubereats, select 2 pepperoni pizzas.  Put them in the cart.  Then checkout. Use the user that is currently logged in."""
+        "text": """Use Uber Eats, select 2 pepperoni pizzas. Put them in the cart. Then checkout. Use the user that is currently logged in."""
     }]
+
+    # initial_payload = [{
+    #     "type": 'text',
+    #     "text": """Open Firefox and search for an image of a puppy."""
+    # }]
+
 
     try:
         agent.invoke_agent(initial_payload)
     except Exception as e:
         logger.error(f"An error occurred while invoking the agent: {str(e)}")
+
+    agent.save_messages_to_file()
+    logger.info(f"Finished.")
 
 if __name__ == "__main__":
     main()

@@ -12,4 +12,4 @@ Don't assume you have completed an action until you have checked the screen.
 Remember to look carefully when selecting items in a menu, especially context menus. 
 Make sure to look first, and then move the mouse carefully over the menu item your want, with the exact words you want, before clicking.
 
-Remember before writing any text double check that the cursor is in the correct location, and you are ready to write. Be careful. 
+Remember before writing any text double check that the cursor is in the correct location, and you are ready to write. Be careful, always look at the screen before performing any action.
