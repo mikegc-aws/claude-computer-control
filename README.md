@@ -14,30 +14,66 @@ By using this software, you acknowledge the risks involved and accept full respo
 
 ## Overview
 
-This project implements an AI Agent capable of interacting with a computer system and performing various tasks. The agent is designed to understand and execute different actions based on user input and utilize various tools to accomplish its objectives.
+This project implements an AI Agent powered by Claude 3.5 Sonnet v2 that can interact with and control a computer system. The agent uses the AWS Bedrock runtime to process commands and execute various computer control actions through a structured tool system.
 
 ### Key Features:
 
-1. **Computer Interaction**: The agent can perform actions such as mouse clicks, keyboard input, and screen captures.
-2. **Tool Integration**: The project includes a framework for integrating different tools, such as bash commands and text editing capabilities.
-3. **Flexible Input Handling**: The agent can process various types of input, including text and tool results.
-4. **Extensible Architecture**: The design allows for easy addition of new tools and actions.
+1. **Computer Interaction**: 
+   - Mouse control (movement, clicks, dragging)
+   - Keyboard input (typing, key combinations)
+   - Screen capture capabilities
+   - Support for special key commands
+
+2. **AWS Integration**:
+   - Uses AWS Bedrock runtime for AI processing
+   - Claude 3.5 Sonnet model integration
+   - Configurable through environment variables
+
+3. **Flexible Architecture**:
+   - Modular tool system
+   - Extensible action handling
+   - Comprehensive error handling
+   - Detailed logging system
+
+4. **Cross-Platform Support**:
+   - Built for MacOS (primary)
+   - Uses platform-agnostic libraries (pyautogui, pynput)
 
 ## Current State
 
-The project is under active development. Core functionalities like computer interaction and basic tool usage are implemented, while others (like bash commands and text editing) are planned for future development.
+The project has implemented core functionalities including:
+- Complete mouse and keyboard control
+- Screenshot capabilities
+- AWS Bedrock integration
+- Basic system prompt handling
+- Tool execution framework
+
+## Configuration
+
+The project uses environment variables for configuration:
+- `BEDROCK_REGION`: AWS Bedrock region (default: us-west-2)
+- `MODEL_ID`: Claude model identifier (default: anthropic.claude-3-5-sonnet-20241022-v2:0)
 
 ## Usage (Don't do this)
 
-Currently, the project can be run as a script, with an example usage provided in the `main.py` file. The agent can be initialized and invoked with a payload, demonstrating its ability to process and respond to user input.
+The project can be run through the `main.py` script, which initializes the AI agent and can process command payloads. Example usage is provided in the main script, demonstrating automated UI interactions.
 
 ## Future Development
 
-- Implementation of bash command tool
-- Text editor tool integration
-- Expansion of computer interaction capabilities
-- Enhanced error handling and feedback mechanisms
+- Implementation of bash command capabilities
+- Text editor integration
+- Enhanced error recovery mechanisms
+- Expanded tool integrations
+- Additional platform-specific optimizations
+- Improved safety checks and validations
 
 ## Contribution
 
 As this project is in its early stages, contributions, suggestions, and feedback are welcome. Please note that the codebase is subject to significant changes as development progresses.
+
+## Technical Requirements
+
+- Python 3.x
+- AWS credentials configured
+- Required Python packages (boto3, pyautogui, pynput)
+- Access to AWS Bedrock service
